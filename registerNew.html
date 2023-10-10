@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register Form</title>
+    <meta name="viewport" content="width=device-width" ,initial-scale="1.0" />
+    <link href="theme.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <h1>User Registeration</h1>
+    </div>
+    <div class="form-area">
+        <form onsubmit="registerUser(event)">
+            <div class="input-group">
+                <label>UserName</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+
+            <div class="error-msg" id="errorMsg">
+
+            </div>
+
+            <div class="button-area">
+                <button type="submit" class="btn-register">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let errorMsg;
+
+        const registerUser = (event) => {
+            event.preventDefault();
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            const emailRegex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+            if (username.length < 8) {
+                errorMsg = "Username must have atleast 8 charactors";
+            } else if (!emailRegex.test(email)) {
+                errorMsg = "Email address is not a valid address";
+            } else if (password.length < 8 && !passwordRegex.test(password)) {
+                errorMsg = "Password must have atleast 8 charactors, 1 uppercase, 1 lowecase, 1 number and 1 symbol";
+            } else if (password !== confirmPassword) {
+                errorMsg = "Passwords are not matching"
+            } else {
+                errorMsg = ""
+            }
+
+            document.getElementById("errorMsg").innerHTML = errorMsg
+        }
+    </script>
+</body>
+
+</html>
